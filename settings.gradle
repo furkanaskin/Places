@@ -1,0 +1,4 @@
+include ':persistence'
+include ':domain'
+include ':data'
+include ':core', ':app'

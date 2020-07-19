@@ -1,0 +1,88 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
+}
+
+android {
+    compileSdkVersion BuildVersions.compileSdkVersion
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion BuildVersions.minSdkVersion
+        targetSdkVersion BuildVersions.targetSdkVersion
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        dataBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    androidExtensions {
+        experimental = true
+    }
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation Dependencies.daggerHilt
+    implementation Dependencies.daggerViewModel
+
+    kapt Dependencies.daggerAndroidCompiler
+    kapt Dependencies.daggerHiltCompiler
+
+    implementation Dependencies.rxJava
+    implementation Dependencies.rxKotlin
+    implementation Dependencies.rxAndroid
+
+    implementation Dependencies.navigationFragment
+    implementation Dependencies.navigationUI
+
+    implementation Dependencies.retrofit
+    implementation Dependencies.okHttp
+
+    implementation Dependencies.roomRuntime
+    kapt Dependencies.roomCompiler
+
+    implementation Dependencies.moshi
+    implementation Dependencies.moshiConverter
+    implementation Dependencies.moshiKotlin
+    kapt Dependencies.moshiKapt
+    implementation Dependencies.rxJavaAdapter
+
+    implementation Dependencies.stethoCore
+    implementation Dependencies.stethoOkHttp
+    implementation Dependencies.stethoUrlConnection
+}
+
+ktlint {
+    debug = true
+    verbose = true
+    android = false
+    outputToConsole = true
+    ignoreFailures = true
+    enableExperimentalRules = true
+    additionalEditorconfigFile = file("/some/additional/.editorconfig")
+    kotlinScriptAdditionalPaths {
+        include fileTree("scripts/")
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}

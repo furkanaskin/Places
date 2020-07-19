@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.faskn.places.dashboard.DashboardViewModel" />
+
+        <variable
+            name="viewState"
+            type="com.faskn.domain.viewState.NearbySearchViewState" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".dashboard.DashboardFragment">
+
+        <TextView
+            android:id="@+id/textViewNearbyPlacesHeaderText"
+            visibility="@{viewState.isSuccess()}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="@string/nearby_places_header_text"
+            android:textColor="@color/purple_500"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleInverse"
+            visibility="@{viewState.loading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:animateLayoutChanges="true"
+            tools:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNearbyPlaces"
+            visibility="@{viewState.isSuccess()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textViewNearbyPlacesHeaderText"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_nearby_places" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@android:color/holo_red_light"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="16dp"
+            app:setErrorView="@{viewState.isInvalid()}"
+            app:strokeColor="@android:color/holo_red_dark"
+            app:strokeWidth="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@android:drawable/stat_notify_error"
+                android:paddingStart="12dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="12dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                app:setErrorText="@{viewState.getApiErrorMessage()}"
+                tools:text="Status code : 500 Internal server error!" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+</layout>

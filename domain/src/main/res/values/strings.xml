@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="try_again_later">Please try again later.</string>
+    <string name="no_results">There is no results with current params.</string>
+</resources>

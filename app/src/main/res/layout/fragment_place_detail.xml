@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.faskn.places.detail.PlaceDetailViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".detail.PlaceDetailFragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintCoverPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_height="275dp">
+
+                <ImageView
+                    android:id="@+id/imageViewCoverPhoto"
+                    drawableLink="@{viewModel.item.getLargestPhoto().photoReference}"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/constraintCoverPhoto"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel.item.name}"
+                android:textColor="@color/purple_200"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="@tools:sample/full_names" />
+
+            <ImageView
+                android:id="@+id/imageViewPlacesIcon"
+                staticDrawableLink="@{viewModel.item.icon}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/textViewName"
+                android:layout_alignBottom="@id/textViewName"
+                android:layout_marginStart="24dp"
+                android:layout_toEndOf="@id/textViewName"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/textViewVicinity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewName"
+                android:layout_alignStart="@id/textViewName"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:text="@{viewModel.item.vicinity}"
+                android:textColor="@color/purple_500"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/textViewRatingHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewVicinity"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/rating"
+                android:textColor="@color/purple_700" />
+
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewRatingHeader"
+                android:layout_alignStart="@id/textViewRatingHeader"
+                android:layout_marginTop="8dp"
+                app:srb_clearRatingEnabled="true"
+                app:srb_clickable="false"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="1"
+                app:srb_numStars="5"
+                app:srb_scrollable="true"
+                app:srb_starHeight="15dp"
+                app:srb_starPadding="4dp"
+                app:srb_starWidth="16dp"
+                app:srb_stepSize="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/ratingBar"
+                android:layout_alignBottom="@id/ratingBar"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/ratingBar"
+                android:gravity="center"
+                android:text="@{viewModel.item.getTotalRatingText()}"
+                android:textColor="@color/purple_700"
+                android:textSize="12sp"
+                tools:text="(15)" />
+
+        </RelativeLayout>
+    </ScrollView>
+</layout>
